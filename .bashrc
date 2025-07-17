@@ -1,0 +1,5 @@
+alias prun='poetry run python3'
+alias ls='ls -la -G -F'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add .'
