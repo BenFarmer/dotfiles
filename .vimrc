@@ -1,10 +1,3 @@
-" Automatic Installations
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 " Settings
 filetype on
 filetype plugin on
@@ -60,4 +53,34 @@ vnoremap <space> zf
 au BufWinLeave *.* mkview                    " save folds
 au BufWinLeave *.* silent loadview           " get folds -warning - gives error on loads
 let g:SimplyFold_docstring_preview = 1
+
+
+""" Automatic Installations
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+
+""" Auto installs
+call plug#begin()
+
+Plug 'vimwiki/vimwiki'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'preservim/nerdtree'
+
+call plug#end()
+
+
+""" NERDTree
+    " Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+    " Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+    " re-open NERDTree
+nnoremap <leader>dd :NERDTree<CR>
+    " swap panes back to the main window
+nnoremap <leader>dr :NERDTreeClose \| :NERDTree \| wincmd p<CR>
+
 
