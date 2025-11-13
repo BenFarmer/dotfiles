@@ -17,6 +17,9 @@ set nowrap
 " disable the fucking bell
 set belloff=all
 
+" add to shot current match position of search
+set shortmess-=S
+
 " incrementally highlights marching characters typed during search
 set incsearch
 
